@@ -1,6 +1,5 @@
 
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
@@ -22,6 +21,7 @@ public class jugador : MonoBehaviour
 
     public AudioSource audioSource;
     public AudioClip getZanahoria;
+    public AudioClip getSecreto;
    
 
     void Start()
@@ -29,7 +29,7 @@ public class jugador : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         posicionInicial = transform.position;
-        audioSource = GetComponent<AudioSource>();
+
     }
 
     private void FixedUpdate()
@@ -104,6 +104,12 @@ public class jugador : MonoBehaviour
         if (collision.transform.CompareTag("meta"))
         {
             SceneManager.LoadScene("Victoria");
+        }
+        if (collision.transform.CompareTag("secreto"))
+        {
+            audioSource.PlayOneShot(getSecreto);
+            Destroy(collision.gameObject);
+            vida.instance.vidas++;
         }
     }
 }
