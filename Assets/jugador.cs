@@ -27,7 +27,7 @@ public class jugador : MonoBehaviour
 
     private void FixedUpdate()
     {
-        estaEnSuelo = Physics2D.OverlapCircle(compruebaSuelo.position, radioSuelo, layerSuelo); //2
+        estaEnSuelo = Physics2D.OverlapCircle(compruebaSuelo.position, radioSuelo, layerSuelo); 
     }
 
     void Update()
