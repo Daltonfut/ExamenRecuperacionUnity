@@ -1,16 +1,24 @@
 using UnityEngine;
+using TMPro;
 
 public class vida : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public static vida instance; 
+    public TMP_Text textoVidas;
+    public int vidas;
+    private void Awake()
+    {
+        instance = this; 
+    }
     void Start()
     {
-        
+        vidas = 2;
+        textoVidas.text = "2";
     }
 
-    // Update is called once per frame
-    void Update()
+    public void quitaVida()
     {
-        
+        vidas--;
+        textoVidas.text = vidas.ToString();
     }
 }

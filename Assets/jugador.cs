@@ -1,6 +1,8 @@
 
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class jugador : MonoBehaviour
 {
@@ -18,11 +20,16 @@ public class jugador : MonoBehaviour
     private Animator animator;
     private Vector3 posicionInicial;
 
+    public AudioSource audioSource;
+    public AudioClip getZanahoria;
+   
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         posicionInicial = transform.position;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void FixedUpdate()
@@ -59,5 +66,44 @@ public class jugador : MonoBehaviour
         }
 
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.CompareTag("coleccionables"))
+        {
+            audioSource.PlayOneShot(getZanahoria);
+            Destroy(collision.gameObject);
+            puntos.instance.SumaPuntos();
+        }
+        if (collision.transform.CompareTag("enemigo"))
+        {
+          
+            vida.instance.quitaVida();
 
+            if (vida.instance.vidas > 0)
+            {
+                transform.position = posicionInicial;
+            }
+            else
+            {
+                SceneManager.LoadScene("Derrota");
+            }
+        }
+        if (collision.transform.CompareTag("suelo"))
+        {
+            vida.instance.quitaVida();
+
+            if (vida.instance.vidas > 0)
+            {
+                transform.position = posicionInicial;
+            }
+            else
+            {
+                SceneManager.LoadScene("Derrota");
+            }
+        }
+        if (collision.transform.CompareTag("meta"))
+        {
+            SceneManager.LoadScene("Victoria");
+        }
+    }
 }
